@@ -1,7 +1,7 @@
 # WinBox Dockerised
 A simple container which runs Mikrotik's WinBox64 via OpenBox and x11vnc, served via VNC on port 5900
 
-The purpose of this container is to provide a simple WinBox instance which is fully compatible with GNS3 (it can be imported in and used with GNS3's VNC mode)
+The purpose of this container is to provide a simple WinBox instance ~~which is fully compatible with GNS3 (it can be imported in and used with GNS3's VNC mode)~~ GNS3 support is intended but not there yet.
 
 ## Environment Variables
 ```
