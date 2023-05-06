@@ -20,9 +20,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && apt-get install wget iproute2 isc-dhcp-client inetutils-ping inetutils-traceroute -y \
     && rm -rf /var/lib/apt/lists/*
 
-#Copy in entrypoint script
+#Copy in entrypoint script and WinBox license
 WORKDIR /
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./WINBOX_LICENSE /WINBOX_LICENSE
 
 #Download WinBox
 #Permission has been granted by Mikrotik (via support@mikrotik.com, ticket number #[SUP-114983]) to distribute WinBox unmodified within this image.
