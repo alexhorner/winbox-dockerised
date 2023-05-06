@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 
 #Install Misc
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
-    && apt-get install wget iproute2 isc-dhcp-client inetutils-ping inetutils-traceroute -y \
+    && apt-get install procps wget iproute2 isc-dhcp-client inetutils-ping inetutils-traceroute -y \
     && rm -rf /var/lib/apt/lists/*
 
 #Copy in entrypoint script and WinBox license

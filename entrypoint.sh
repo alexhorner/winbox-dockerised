@@ -39,4 +39,9 @@ fi
 openbox &
 
 #Launch WinBox
-wine /winbox64.exe
+while true
+do
+    if [[ ! $(pgrep wine) ]]; then
+        wine /winbox64.exe
+    fi
+done
