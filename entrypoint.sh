@@ -1,23 +1,24 @@
 #!/bin/bash
 
 #Prepare variables
-export DISPLAY=":0"
-: "${VNC_WIDTH:=1280}"
-: "${VNC_HEIGHT:=720}"
-: "${VNC_PIXELDEPTH:=24}"
+: "${VNC_BUILTIN_WIDTH:=1280}"
+: "${VNC_BUILTIN_HEIGHT:=720}"
+: "${VNC_BUILTIN_PIXELDEPTH:=24}"
+: "${VNC_BUILTIN_DISABLED:=false}"
 
-#Ensure WinBox is downloaded
-if [ -f "/winbox64.exe" ]; then
-   echo "WinBox64 has already been downloaded"
+if [ "${VNC_BUILTIN_DISABLED}" = true ]; then
+    echo "Builtin VNC is disabled. You must ensure the DISPLAY variable is set and the target display is accessible"
+    echo "Using display ${DISPLAY}"
 else
-   echo "WinBox64 is missing, downloading..."
-   wget -O /winbox64.exe https://download.mikrotik.com/winbox/3.37/winbox64.exe
+    echo "Builtin VNC is enabled. The DISPLAY variable will be ignored and overwritten"
+    export DISPLAY=":0"
+
+    #Launch the virtual framebuffer and wait for it to become ready
+    echo "Using display ${DISPLAY} with size of ${VNC_BUILTIN_WIDTH}x${VNC_BUILTIN_HEIGHT} with pixel depth ${VNC_BUILTIN_PIXELDEPTH}"
+    Xvfb ${DISPLAY} -screen 0 "${VNC_BUILTIN_WIDTH}x${VNC_BUILTIN_HEIGHT}x${VNC_BUILTIN_PIXELDEPTH}" &
 fi
 
-#Launch the virtual framebuffer and wait for it to become ready
-echo "Using display ${DISPLAY} with size of ${VNC_WIDTH}x${VNC_HEIGHT} with pixel depth ${VNC_PIXELDEPTH}"
-Xvfb ${DISPLAY} -screen 0 "${VNC_WIDTH}x${VNC_HEIGHT}x${VNC_PIXELDEPTH}" &
-
+#Wait for the display to become ready
 while true
 do
     if xdpyinfo -display "${DISPLAY}" > /dev/null 2>/dev/null; then
@@ -29,8 +30,10 @@ do
     fi
 done
 
-#Launch the VNC server
-x11vnc -bg -forever -nopw -display ${DISPLAY} &
+#Launch the VNC server if enabled
+if [ "${VNC_BUILTIN_DISABLED}" != true ]; then
+    x11vnc -bg -forever -nopw -display ${DISPLAY} &
+fi
 
 #Launch OpenBox
 openbox &
