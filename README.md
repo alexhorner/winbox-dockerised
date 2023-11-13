@@ -17,6 +17,11 @@ Here's a quick example command you can run to host an instance of this container
 docker run -it --rm --network host alexhorner/winbox-dockerised
 ```
 
+Should you encounter `Failed to close file descriptor for child process (Operation not permitted)` you may need to add `--security-opt seccomp=unconfined`, however this can have security implications, see https://gist.github.com/nathabonfim59/b088db8752673e1e7acace8806390242
+```bash
+docker run -it --rm --network host --security-opt seccomp=unconfined alexhorner/winbox-dockerised
+```
+
 ## DHCP
 DHCP is not enabled by default in the container, however the container is Debian based so you can install any tools you may need. The `dhclient` command is included by default to obtain a DHCP address manually, as well as the `ip` command for viewing IPs and setting static ones.
 

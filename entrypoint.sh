@@ -42,6 +42,6 @@ openbox &
 while true
 do
     if [[ ! $(pgrep wine) ]]; then
-        wine /winbox64.exe
+        wine64 /winbox64.exe
     fi
 done
