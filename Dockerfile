@@ -34,7 +34,7 @@ COPY ./WINBOX_LICENSE /WINBOX_LICENSE
 
 #Download WinBox
 #Permission has been granted by Mikrotik (via support@mikrotik.com, ticket number #[SUP-114983]) to distribute WinBox unmodified within this image.
-RUN wget -O /winbox64.exe https://download.mikrotik.com/winbox/3.40/winbox64.exe
+RUN wget -O /winbox64.exe https://download.mikrotik.com/routeros/winbox/3.41/winbox64.exe
 
 #Finalise
 EXPOSE 5900
